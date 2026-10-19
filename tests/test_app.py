@@ -15,7 +15,7 @@ def client():
 def test_healthz_returns_ok(client):
     response = client.get("/healthz")
     assert response.status_code == 200
-    assert response.get_json() == {"status": "ok"}
+    assert response.get_json() == {"status": "healthy"}
 
 
 def test_index_returns_json_with_version(client):
