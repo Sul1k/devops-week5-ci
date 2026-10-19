@@ -1,0 +1,41 @@
+# Version control
+.git
+.gitignore
+
+# Python caches and virtualenvs
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Node (not used by this app, excluded as required)
+node_modules/
+
+# Secrets and local config
+.env
+.env.*
+
+# Test output and reports
+coverage/
+.coverage
+htmlcov/
+test-results/
+*.log
+
+# Files that are not needed inside the image
+README.md
+Dockerfile.naive
+build.sh
+run.sh
+
+# CI files are not needed inside the image
+.github/
+tests/
+requirements-dev.txt
+pytest.ini
+ruff.toml
+CI.md
+test-results/
