@@ -106,15 +106,18 @@ Two caches are used.
 `cache: pip`. The cache key is a hash of `requirements-dev.txt` and
 `app/requirements.txt`. While those files do not change, the wheels for Flask,
 gunicorn, pytest and ruff are restored from the cache instead of being
-downloaded from PyPI again. The install step drops from roughly 10 seconds to
-roughly 2 seconds, and more importantly it no longer depends on PyPI being
-reachable.
+downloaded from PyPI again. On the second run the step logs `Cache hit` and
+every package is installed as `Using cached ...whl`. For this small app the
+install takes about three seconds either way, so the real gain is that the
+step no longer depends on PyPI being reachable, and the pattern scales to
+projects with hundreds of megabytes of dependencies.
 
 **Docker layer cache** in `build`, through `cache-from: type=gha` and
 `cache-to: type=gha,mode=max`. Unchanged layers, above all the base image and
 the `pip install` layer of the builder stage, are pulled from the GitHub
 Actions cache. A rebuild after a source-only change reuses every layer up to
-`COPY app/ .`.
+`COPY app/ .`. Measured on the mirror repository: the first build took 25
+seconds, the next one 6 seconds.
 
 Caches are keyed per branch and fall back to the default branch, so a pull
 request benefits from the cache that `main` already populated.
